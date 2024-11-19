@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import pool from "./dataBase/databaseconnection";
-import { getProducto } from "./controllers/productos_controller";
+import { getProducto, getProductoById } from "./controllers/productos_controller";
 
 
 require('dotenv').config();
@@ -11,13 +11,8 @@ const port = process.env.PORT
 const productosRoutes = Router();
 
 productosRoutes.get('/getproductos', getProducto)
+productosRoutes.get('/getproductosbyid/:id', getProductoById)
 
-app.get('/', async (req,res)=>{
-    const query = 'select * from productos;'
-    const response = await pool.query(query);
-    console.log(response);
-    res.send('Hola Mundo Soy david Roa')
-});
 
 app.use(productosRoutes);
 
