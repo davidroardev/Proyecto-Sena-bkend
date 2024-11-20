@@ -1,8 +1,15 @@
 import { QueryResult } from "pg";
 import pool from "../dataBase/databaseconnection";
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 
 
+
+/**
+ * Funcion que solicita todos los datos de una tabla
+ * @param req 
+ * @param res 
+ * @returns todos los datos de una tabla
+ */
 export const getProducto = async (req: Request, res: Response): Promise<Response>=>{
     try {
         const response: QueryResult = await pool.query('SELECT * FROM productos;');
@@ -13,6 +20,12 @@ export const getProducto = async (req: Request, res: Response): Promise<Response
     }
 };
 
+/**
+ * Funcion que retorna un registro con un id especifico
+ * @param req 
+ * @param res 
+ * @returns registro con id 
+ */
 export const getProductoById = async (req: Request, res: Response): Promise<Response>=>{
     
     const id = parseInt(req.params.id);
@@ -31,6 +44,12 @@ export const getProductoById = async (req: Request, res: Response): Promise<Resp
     }
 };
 
+/**
+ * Hace la solicitud para crear un registro en la tabla productos 
+ * @param req 
+ * @param res 
+ * @returns Respuesta para la solicitud del tipo post
+ */
 
 export const createProducto = async (req: Request, res: Response): Promise<Response> =>{
     const {id,idProducto,tipoProducto,nombreproducto,tallaProducto,colorProducto, existenciasProducto,estadoProducto}=req.body;
@@ -61,4 +80,58 @@ export const createProducto = async (req: Request, res: Response): Promise<Respo
         
         return res.status(500).json('Los datos id, IdProducto, Tipo, Nombre o Estado no pueden estar vacios');
     }
+};
+
+/**
+ * Solicita Actualizar un registro
+ * @param req 
+ * @param res 
+ * @returns 
+ */
+export const deleteProducto  = async (req:Request,res:Response): Promise<Response> =>{
+    const id = parseInt(req.params.id);
+
+    try {
+            await pool.query('DELETE FROM productos WHERE id = $1;', [id] );
+            return res.status(200).json(`El producto con id: ${id} ha sido eliminado exitosamente`)
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json('Internal Server Error');
+    }
+
+};
+
+/**
+ * Funcion que elimina un registro de la tabla
+ * @param req 
+ * @param res 
+ * @returns Mensaje de error o exito de la funcion segun el caso
+ */
+export const updateProducto = async (req: Request, res:Response): Promise<Response> =>{
+    const id = parseInt(req.params.id);
+    const {idProducto,tipoProducto,nombreproducto,tallaProducto,colorProducto, existenciasProducto,estadoProducto}=req.body;
+
+    try {
+        await pool.query('UPDATE productos SET id_producto = $1, tipo_producto =$2, nombre= $3, talla = $4,color =$5 , existencias=$6 , estado=$7 WHERE id = $8 ',
+            [idProducto,tipoProducto,nombreproducto,tallaProducto,colorProducto,existenciasProducto,estadoProducto,id]
+        );
+        return res.json({
+            message: `El registro del producto con id: ${id} ha sido actiualizado exitosamente`,
+            Producto:{
+                id,
+                idProducto,
+                tipoProducto,
+                nombreproducto,
+                tallaProducto,
+                colorProducto,
+                existenciasProducto,
+                estadoProducto
+            }
+        })
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json('Internal Server Error');
+    }
+
+
 };

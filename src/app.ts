@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import pool from "./dataBase/databaseconnection";
-import { createProducto, getProducto, getProductoById } from "./controllers/productos_controller";
+import { createProducto, deleteProducto, getProducto, getProductoById, updateProducto } from "./controllers/productos_controller";
 
 
 require('dotenv').config();
@@ -15,6 +15,8 @@ app.use(express.json())
 productosRoutes.get('/getproductos', getProducto);
 productosRoutes.get('/getproductosbyid/:id', getProductoById);
 productosRoutes.post('/createproductos', createProducto);
+productosRoutes.delete('/deleteproducto/:id', deleteProducto);
+productosRoutes.put('/updateproducto/:id', updateProducto);
 
 
 app.use(productosRoutes);
