@@ -1,8 +1,8 @@
 import express, { Router } from "express";
-import pool from "./dataBase/databaseconnection";
 import { createProducto, deleteProducto, getProducto, getProductoById, updateProducto } from "./controllers/productos_controller";
 import { generateToken } from "./controllers/user_controller";
 import { authToken } from "./middleware/authorization";
+import { errorHandler } from "./middleware/errorHandler";
 
 require('dotenv').config();
 
@@ -21,7 +21,8 @@ productosRoutes.put('/updateproducto/:id', authToken ,updateProducto);
 userRoutes.post('/api/login', generateToken)
 
 
-app.use(express.json())
+app.use(express.json());
+app.use(errorHandler);
 app.use(productosRoutes);
 app.use(userRoutes);
 app.listen(port, ()=>{
