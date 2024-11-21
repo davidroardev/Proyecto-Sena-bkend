@@ -10,16 +10,3 @@ export const generateToken = (req:Request, res:Response): Response=>{
     return res.status(200).json({accessToken});
 };
 
-export const authToken = (req: Request, res:Response, next:NextFunction) =>{
-    const authHeaders = req.headers['authorization'];
-    const token = authHeaders && authHeaders.split(' ')[1];
-    if(!token){
-        return res.status(401).json({error: 'Token de autorizacion no encontrado'});
-    }
-    jwt.verify(token, `${process.env.CLAVE_JWT}`, (err,user)=>{
-        if(err){
-            return res.status(403).json({error: 'Token invalido'});
-        }
-    });
-    next();
-};
