@@ -10,9 +10,9 @@ import { Request, response, Response } from "express";
  * @param res 
  * @returns todos los datos de una tabla
  */
-export const getProducto = async (req: Request, res: Response): Promise<Response>=>{
+export const getTabla = async (req: Request, res: Response): Promise<Response>=>{
     try {
-        const response: QueryResult = await pool.query('SELECT * FROM productos;');
+        const response: QueryResult = await pool.query('SELECT * FROM productos;'); //cambiar el codigo sql segun el caso de la tabla 
         return res.status(200).json(response.rows)
     } catch (error) {
         console.error(error);
@@ -26,12 +26,12 @@ export const getProducto = async (req: Request, res: Response): Promise<Response
  * @param res 
  * @returns registro con id 
  */
-export const getProductoById = async (req: Request, res: Response): Promise<Response>=>{
+export const getTablaById = async (req: Request, res: Response): Promise<Response>=>{
     
     const id = parseInt(req.params.id);
 
     try {
-        const response: QueryResult= await pool.query('SELECT * FROM productos WHERE id = $1;', [id]);
+        const response: QueryResult= await pool.query('SELECT * FROM productos WHERE id = $1;', [id]); //cambiar el codigo sql segun el caso de la tabla 
 
         if (response.rows.length === 0) {
             // ID inexistente
@@ -51,13 +51,13 @@ export const getProductoById = async (req: Request, res: Response): Promise<Resp
  * @returns Respuesta para la solicitud del tipo post
  */
 
-export const createProducto = async (req: Request, res: Response): Promise<Response> =>{
-    const {id,idProducto,tipoProducto,nombreproducto,tallaProducto,colorProducto, existenciasProducto,estadoProducto}=req.body;
+export const createTabla = async (req: Request, res: Response): Promise<Response> =>{
+    const {id,idProducto,tipoProducto,nombreproducto,tallaProducto,colorProducto, existenciasProducto,estadoProducto}=req.body; // Añadir o quitar, poner las columnas de la tabla en la cual se busca hacer la insercion
 
     if (id !== null && idProducto !==null && tipoProducto !== null && nombreproducto !== null && estadoProducto !==null ){
         try {
             await pool.query ('INSERT INTO productos (id, id_producto, tipo_producto, nombre, talla,color, existencias, estado) values ($1, $2, $3, $4, $5, $6, $7, $8)',
-                [id,idProducto,tipoProducto,nombreproducto,tallaProducto,colorProducto,existenciasProducto,estadoProducto]
+                [id,idProducto,tipoProducto,nombreproducto,tallaProducto,colorProducto,existenciasProducto,estadoProducto] // cambiar la consulta de acuerdo a la tabla 
             );
             return res.status(201).json({
                 message:'Se creo el producto satisfactoriamente',
@@ -88,7 +88,8 @@ export const createProducto = async (req: Request, res: Response): Promise<Respo
  * @param res 
  * @returns 
  */
-export const deleteProducto  = async (req:Request,res:Response): Promise<Response> =>{
+
+export const deleteTabla  = async (req:Request,res:Response): Promise<Response> =>{
     const id = parseInt(req.params.id);
 
     try {
@@ -107,7 +108,7 @@ export const deleteProducto  = async (req:Request,res:Response): Promise<Respons
  * @param res 
  * @returns Mensaje de error o exito de la funcion segun el caso
  */
-export const updateProducto = async (req: Request, res:Response): Promise<Response> =>{
+export const updateTabla = async (req: Request, res:Response): Promise<Response> =>{
     const id = parseInt(req.params.id);
     const {idProducto,tipoProducto,nombreproducto,tallaProducto,colorProducto, existenciasProducto,estadoProducto}=req.body;
 
