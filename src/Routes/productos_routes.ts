@@ -4,8 +4,8 @@ import { authToken } from "../middleware/authorization";
 
 export const productosRoutes = Router();
 
-productosRoutes.get('/getproductos', authToken, getProducto);
-productosRoutes.get('/getproductosbyid/:id', authToken,getProductoById);
-productosRoutes.post('/createproductos', authToken,createProducto);
-productosRoutes.delete('/deleteproducto/:id', authToken, deleteProducto);
-productosRoutes.put('/updateproducto/:id', authToken ,updateProducto);
+productosRoutes.get('/getproductos', getProducto);
+productosRoutes.get('/getproductosbyid/:id', getProductoById);
+productosRoutes.post('/createproductos', createProducto);
+productosRoutes.delete('/deleteproducto/:id',  deleteProducto);
+productosRoutes.put('/updateproducto/:id', updateProducto);

@@ -12,7 +12,7 @@ import { Request, response, Response } from "express";
  */
 export const getProducto = async (req: Request, res: Response): Promise<Response>=>{
     try {
-        const response: QueryResult = await pool.query('SELECT * FROM productos;');
+        const response: QueryResult = await pool.query('SELECT * FROM productos ORDER BY id;');
         return res.status(200).json(response.rows)
     } catch (error) {
         console.error(error);
