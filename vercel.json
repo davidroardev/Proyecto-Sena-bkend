@@ -3,7 +3,7 @@
         "scr":"lib/app.js",
         "use":"@vercel/node"
     }],
-    "router":[{
+    "routes":[{
         "src":"/{.*}",
         "dest":"lib/app.js"
     }]
