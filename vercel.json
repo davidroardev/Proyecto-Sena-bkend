@@ -1,0 +1,10 @@
+{
+    "builds":[{
+        "scr":"lib/app.js",
+        "use":"@vercel/node"
+    }],
+    "router":[{
+        "src":"/{.*}",
+        "dest":"lib/app.js"
+    }]
+}
