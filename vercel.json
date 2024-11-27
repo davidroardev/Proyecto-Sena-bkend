@@ -1,6 +1,6 @@
 {
     "builds":[{
-        "scr":"lib/app.js",
+        "src":"lib/app.js",
         "use":"@vercel/node"
     }],
     "routes":[{
