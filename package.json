@@ -4,9 +4,9 @@
   "description": "Final project for my grade at ADSO sena ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build":"tsc",
     "start": "node lib/app.js",
-    "build":"tsc"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
