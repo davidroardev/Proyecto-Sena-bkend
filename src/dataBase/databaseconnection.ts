@@ -8,7 +8,7 @@ let pool: Pool;
 
 if (process.env.PRODUCTION){
     pool = new Pool({
-        connectionString: process.env.POSTGRES_URL,
+        connectionString: process.env.POSTGRES_POSTGRES_URL,
     });
     
 }else{
